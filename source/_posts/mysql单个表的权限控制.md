@@ -9,7 +9,6 @@ tags: mysql
 
 <!-- more -->
 
-
 ## revoke
 
 Mysql本身是支持用revoke进行权限回收操作的。
