@@ -1,6 +1,8 @@
-Title: 地理位置geo处理之mongodb geo 索引
-Date: 2017-12-01 10:34
-Category: 方案
+---
+title: 地理位置geo处理之mongodb geo 索引
+date: 2017-12-01 10:34
+tags: 方案
+---
 
 > 目前越来越多的业务都会基于LBS，附近的人，外卖位置，附近商家等等，现就讨论离我最近这一业务场景的解决方案。
 
