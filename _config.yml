@@ -99,3 +99,4 @@ theme: volantis
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: ''
+baidu_analytics_key: e99feed4245dcdf8a16ad3d62e236e14
