@@ -1,5 +1,5 @@
 ---
-title: mysql单个表的权限控制[原创]
+title: mysql单个表的权限控制
 date: 2020-05-08 09:43:39
 tags: mysql
 
