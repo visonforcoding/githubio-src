@@ -12,7 +12,7 @@ tags: java spring-boot
 ## 分环境配置
 
 
-![](https://user-gold-cdn.xitu.io/2020/4/28/171bf4e4682557aa?w=982&h=198&f=png&s=45808)
+![](http://img.rc5j.cn/blog20200526133442.png)
 
 
 ```
@@ -65,5 +65,10 @@ public class OssService {
 ```
 
 **一定要是在spring bean里进行获取，否则无法获取到。**
+
+## 参考
+
+
+1. https://docs.spring.io/spring-boot/docs/1.5.22.RELEASE/reference/html/boot-features-external-config.html
 
 
