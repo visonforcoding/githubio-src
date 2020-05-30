@@ -163,6 +163,6 @@ USR1被捕获到了，并且程序立即执行完一次输出退出了。注意�
 
 ## 参考
 
-![](https://en.wikipedia.org/wiki/Signal_(IPC))
+[https://en.wikipedia.org/wiki/Signal_(IPC)](https://en.wikipedia.org/wiki/Signal_(IPC))
 
 
