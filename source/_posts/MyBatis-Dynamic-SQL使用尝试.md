@@ -6,6 +6,10 @@ tags: java
 
 首先说明下，我可能是被这个插件的名字给误导了。我原本以为Dynamic SQL是为了解决动态查询场景的。但可能`MyBatis Dynamic SQL` 并不是来解决这个问题的。
 
+20.06.04更新
+
+**打脸了**，原来它是支持的，果然是动态sql.并且还真香！
+
 <!--more-->
 
 ## MyBatis Dynamic SQL
@@ -121,7 +125,60 @@ $ mvn mybatis-generator:generate
     List<Task> tasks = taskMapper.selectMany(tasksQuerypProvider);
 ```
 
-看起来`MyBatis Dynamic SQL`只是了更为优雅得sqlbuilder方式。
+`MyBatis Dynamic SQL`非常优雅得sqlbuilder方式,会提示表字段名。
+
+### 动态sql
+
+在这之前`mybatis`可以使用xml或注解方式进行动态组织sql
+
+```java
+public class TaskService {
+
+    public String queryCount(String type, String remark) {
+        return new SQL() {
+            {
+                SELECT("T.ID");
+                FROM("TASK T");
+                if (type != null) {
+                    WHERE("T.type = #{type}");
+                }
+                if (remark != null) {
+                    WHERE("T.remark = #{remark}");
+                }
+                ORDER_BY("T.create_time");
+            }
+        }.toString();
+    }
+```
+
+在mapper上
+
+```java
+  @SelectProvider(type = TaskService.class, method = "queryCount")
+    public Object queryCount(String type, String remark);
+```
+
+现在可以换另一种方式
+
+```java
+   public SelectStatementProvider search(Integer typeInteger, String remarkString) {
+        QueryExpressionDSL<SelectModel>.QueryExpressionWhereBuilder builder = select(count())
+                .from(task).where();
+        if (typeInteger != null) {
+            builder.and(type, isEqualTo(typeInteger));
+        }
+        if (remarkString != null) {
+            builder.and(remark, isEqualTo(remarkString));
+        }
+        return builder.build().render(RenderingStrategy.MYBATIS3);
+    }
+```
+从编码感受上，由于根据表结构生成了`SqlSupport`.任何对表的信息引用都能有提示，包括表名、字段名。
+
+```java
+List<Task> tasks = taskMapper.selectMany(taskService.search(null, iPageSize, iOffset));
+```
+调用上面，也无需在mapper上再编写方法，因为已经全部生成了。
 
 
 ## 参考
