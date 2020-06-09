@@ -161,6 +161,19 @@ public class TaskService {
 现在可以换另一种方式
 
 ```java
+
+    public SelectStatementProvider countTask(Integer typeInteger, String remarkString) {
+        QueryExpressionDSL<SelectModel>.QueryExpressionWhereBuilder builder = select(count())
+                .from(task).where();
+        if (typeInteger != null) {
+            builder.and(type, isEqualTo(typeInteger));
+        }
+        if (remarkString != null) {
+            builder.and(remark, isEqualTo(remarkString));
+        }
+        return builder.build().render(RenderingStrategy.MYBATIS3);
+    }
+
     public SelectStatementProvider search(Object searchObj, Integer iPageSize, Integer iOffset) {
         QueryExpressionDSL<SelectModel>.QueryExpressionWhereBuilder builder = select(remark, type, createTime, modifyTime)
                 .from(task).where();
