@@ -43,6 +43,20 @@ php vendor/bin/codecept bootstrap
 ```
 该命令会初始化配置文件和目录
 
+### 轻量安装
+
+Use predefined installation templates for common use cases. Run them instead of bootstrap command.
+
+`bootstrap`会默认初始化所有测试类型所需要的组件，有些你不会用到的类库也会安装。推荐使用轻量安装所用能到的测试类型。
+
+例如你只需要单元测试，则可以
+
+```
+php vendor/bin/codecept init unit
+```
+
+![](http://img.rc5j.cn/blog20200702152857.png)
+
 
 ## codeception单元测试
 
