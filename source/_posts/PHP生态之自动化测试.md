@@ -55,6 +55,24 @@ Use predefined installation templates for common use cases. Run them instead of 
 php vendor/bin/codecept init unit
 ```
 
+**suite配置**
+
+初始化之后还要对测试类型进行相应的配置,在tests目录下新建unit的配置
+
+```yml
+# unit.suite.yml
+# Codeception Test Suite Configuration
+#
+# Suite for unit or integration tests.
+
+actor: UnitTester
+modules:
+    enabled:
+        - Asserts
+        - \Helper\Unit
+    step_decorators: ~        
+```
+
 ![](http://img.rc5j.cn/blog20200702152857.png)
 
 
