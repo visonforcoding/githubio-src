@@ -6,6 +6,8 @@ tags: kafka
 
 首先,安装确实是一个费时费力的事情。这里我们使用docker安装。
 
+<!--more-->
+
 ## docker搭建kafka
 
 ```yml
