@@ -1,8 +1,12 @@
 ---
 title: docker+compose+nginx+php
-date: 2020-07-22 16:52:09
+date: 2018-07-22 16:52:09
 tags:  docker
 ---
+
+![](http://img.rc5j.cn/blog20200722165520.png)
+
+<!--more-->
 
 > Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。
 
