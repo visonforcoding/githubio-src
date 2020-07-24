@@ -149,3 +149,13 @@ class UserTest extends \Codeception\Test\Unit
     }
 }
 ```
+
+### 结果
+
+![](http://img.rc5j.cn/blog20200723093255.png)
+
+![](http://img.rc5j.cn/blog20200723093429.png)
+
+可以统计到所有文件的覆盖率和用例测试结果。
+
+结合git钩子我们可以在每次分支提交时进行自动的用例测试，能一定程度上防止代码更改了而没测试产生非预期的问题。
