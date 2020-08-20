@@ -26,7 +26,7 @@ https://github.com/unicode-org/icu/releases/tag/release-60-3
 pecl install intl
 ```
 
-总会遇到问题,建议用phpize 源码安装。
+总会遇到问题,建议用phpize 源码安装。进入源码ext下的intl目录
 
 ```
 ./configure  --enable-intl   --with-php-config=/usr/local/php7/bin/php-config
