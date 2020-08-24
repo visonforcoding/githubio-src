@@ -32,4 +32,6 @@ vuetifyjs官方提供的方法实际运用当中似乎会存在一些兼容问�
 
 第二步：挑选相应图标并获取类名，应用于页面：
 
+```html
 <i class="iconfont icon-xxx"></i>
+```
