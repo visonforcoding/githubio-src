@@ -73,4 +73,10 @@ pip install openpyxl -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mi
 gunicorn -c config.py app:app
 ```
 
+## 平滑重启
+
+```shell
+cat logs/gunicorn.log | xargs kill -HUP
+```
+
 
