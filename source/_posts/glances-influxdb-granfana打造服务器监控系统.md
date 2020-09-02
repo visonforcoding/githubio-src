@@ -17,3 +17,63 @@ glances是由python编写的，因此可以使用pip直接安装
 ```
 pip3 install glances
 ```
+
+## influxdb安装
+
+```
+wget https://dl.influxdata.com/influxdb/releases/influxdb-1.8.2.x86_64.rpm
+sudo yum localinstall influxdb-1.8.2.x86_64.rpm
+```
+
+## 收集数据到influxdb
+
+配置 glances
+
+`vim /etc/glances/glances.conf`
+
+```ini
+[influxdb]
+# Configuration for the --export influxdb option
+# https://influxdb.com/
+host=localhost
+port=8086
+user=root
+password=root
+db=glances
+prefix=localhost
+#tags=foo:bar,spam:eggs
+```
+
+```
+pip3 install influxdb
+glances --export influxdb
+```
+执行 `glances --export influxdb` 测试下，报错
+
+`InfluxDB database 'glances' did not exist. Please create it`需要新建数据库。
+
+执行shell `influx`
+
+```
+CREATE DATABASE glances  #创建数据
+SHOW DATABASES   # 查看数据库
+```
+再次执行`glances --export influxdb` ,可显示如下代表目前一切正常
+
+![](http://img.rc5j.cn/blog20200828161232.png)
+
+## granfana安装
+
+```
+wget https://dl.grafana.com/oss/release/grafana-7.1.5-1.x86_64.rpm
+sudo yum install grafana-7.1.5-1.x86_64.rpm
+```
+### 启动
+
+```shell
+systemctl daemon-reload
+systemctl start grafana-server
+systemctl status grafana-server
+
+systemctl enable grafana-server.service
+```

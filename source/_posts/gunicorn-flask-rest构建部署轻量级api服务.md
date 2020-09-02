@@ -76,7 +76,7 @@ gunicorn -c config.py app:app
 ## 平滑重启
 
 ```shell
-cat logs/gunicorn.log | xargs kill -HUP
+cat logs/gunicorn.pid | xargs kill -HUP
 ```
 
 

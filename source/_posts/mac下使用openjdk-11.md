@@ -1,5 +1,5 @@
 ---
-title: mac下使用openjdk 11
+title: 使用openjdk 11
 date: 2020-08-27 11:41:07
 tags: java
 ---
@@ -15,8 +15,20 @@ tags: java
 
 可以从 https://mirrors.huaweicloud.com/openjdk/ 下载得到
 
-## 安装
+## mac安装
 
 ```
 sudo mv /Downloads/jdk11 /Library/Java/JavaVirtualMachines/jdk-11.jdk
+```
+
+## linux
+
+配置bash_profile
+
+`vim ~/.bash_profile`
+
+```
+JAVA_HOME="/usr/local/jdk-11.0.2"
+PATH=$PATH:$HOME/bin:$JAVA_HOME/bin
+export PATH
 ```
