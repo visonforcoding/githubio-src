@@ -387,13 +387,104 @@ xmlwriter
 
 ## 常用配置
 
-```
-./configure --enable-fpm  --enable-bcmath  --with-openssl \
---enable-intl --enable-mbstring --with-mysqli --enable-mysqlnd
-```
-
 ### 依赖安装
 
 ```
 yum install -y libxml2-devel openssl-devel
 ```
+
+```
+./configure --enable-fpm  --enable-bcmath  --with-openssl \
+--enable-mbstring --with-mysqli --enable-mysqlnd
+```
+
+
+
+### 编译安装
+
+```
+make && make install
+```
+
+## 启动
+
+### 查看ini配置
+
+```
+php -ini | grep 'ini'
+```
+
+```
+Configuration File (php.ini) Path => /usr/local/lib
+Loaded Configuration File => /usr/local/lib/php.ini
+Scan this dir for additional .ini files => (none)
+Additional .ini files parsed => (none)
+user_ini.cache_ttl => 300 => 300
+user_ini.filename => .user.ini => .user.ini
+init_command_executed_count => 0
+init_command_failed_count => 0
+com_init_db => 0
+```
+从源代码目录 复制配置文件到`Configuration File (php.ini) Path`
+
+```
+cp php.ini-production /usr/local/lib/php.ini
+```
+
+## 设置服务&开机启动(centos 7+)
+
+服务服务脚本到systemd
+
+```
+cp sapi/fpm/php-fpm.service /etc/systemd/system/
+
+```
+查看启动脚本
+
+```
+cat sapi/fpm/php-fpm.service
+```
+
+结果
+
+```
+# It's not recommended to modify this file in-place, because it
+# will be overwritten during upgrades.  If you want to customize,
+# the best way is to use the "systemctl edit" command.
+
+[Unit]
+Description=The PHP FastCGI Process Manager
+After=network.target
+
+[Service]
+Type=simple
+PIDFile=/usr/local/var/run/php-fpm.pid
+ExecStart=/usr/local/sbin/php-fpm --nodaemonize --fpm-config /usr/local/etc/php-fpm.conf
+ExecReload=/bin/kill -USR2 $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+```
+
+### 配置
+
+```
+cp sapi/fpm/php-fpm.conf /usr/local/etc/php-fpm.conf
+
+```
+修改php-fpm.conf 相应配置使得PIDFile文件位置与php-fpm.service配置的一致。并复制www.conf到对应目录
+
+### 启动
+
+```
+systemctl daemon-reload
+systemctl start php-fpm.service
+systemctl status php-fpm.service
+systemctl enable php-fpm.service
+```
+
+
+
+
+
