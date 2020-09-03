@@ -55,7 +55,7 @@ RestartSec=42s
 [Install]
 WantedBy=multi-user.target
 ```
-将此文件为 ``
+将此文件为保存为 `vim /etc/systemd/system/supervisord.service`
 ### 启动服务
 
 重新读取所有服务项

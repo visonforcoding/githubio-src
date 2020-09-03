@@ -77,3 +77,13 @@ systemctl status grafana-server
 
 systemctl enable grafana-server.service
 ```
+
+### 配置数据源
+
+![](http://img.rc5j.cn/blog20200902134424.png)
+
+grafana 还支持zipkin
+
+![](http://img.rc5j.cn/blog20200902134452.png)
+
+

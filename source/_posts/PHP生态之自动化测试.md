@@ -125,6 +125,12 @@ class ExampleTest extends \Codeception\Test\Unit
 ```
 php vendor/bin/codecept run unit ExampleTest
 ```
+如果有目录可以执行到文件
+
+```
+php bin/codecept run unit tests/unit/src/Service/InvoiceServiceTest.php       
+```
+
 运行所有单元测试用例
 
 ```
