@@ -31,4 +31,12 @@ IOC就是为了把原本互相之间有耦合在一起，会造成牵一发而�
 org.springframework.beans 和org.springframework.context 包是Spring Framework 的IoC 容器的基础。
 
 
+BeanFactory 接口提供高级的配置机制，可以管理任意类型的对象。
+
+- ApplicationContext 是BeanFactory 的子接口。
+- 它添加了和Spring 的AOP 特性很简便的整合；
+- 消息资源处理（用于国际化i18n），事件发布；
+- 应用层特定的上下文， 比如用于Web 应用程序的WebApplicationContext。
+
+总之，BeanFactory 提供了配置框架和基本功能，而ApplicationContext 添加了更多企业级开发特定的功能。
 

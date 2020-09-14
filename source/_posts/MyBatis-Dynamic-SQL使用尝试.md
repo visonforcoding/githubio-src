@@ -32,6 +32,18 @@ This library grew out of a desire to create a utility that could be used to impr
 
 官方说可以使用`MyBatis Generator`生成代码文件。
 
+```xml
+<dependency>
+    <groupId>org.mybatis.dynamic-sql</groupId>
+    <artifactId>mybatis-dynamic-sql</artifactId>
+    <version>1.1.4</version>
+</dependency>
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+</dependency>
+```
+
 ## MyBatis Generator
 
 MyBatis Generator may generate:
