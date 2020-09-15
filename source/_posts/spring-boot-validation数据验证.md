@@ -85,3 +85,8 @@ public class ControllerAdvice {
 由于使用`@Valid`对参数进行校验之后，如果有校验不通过会抛出一个`MethodArgumentNotValidException`异常。全局进行捕获之后可以全局处理参数不正确的情况。
 
 
+## 参考
+
+https://www.cnblogs.com/fqybzhangji/p/10384347.html
+
+
