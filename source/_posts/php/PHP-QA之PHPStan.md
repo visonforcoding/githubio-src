@@ -1,5 +1,5 @@
 ---
-title: PHP QA之PHPStan
+title: PHP QA
 date: 2020-09-17 20:44:41
 tags: PHP
 ---
@@ -7,7 +7,7 @@ tags: PHP
 ![](http://img.rc5j.cn/blog20200917210020.png)
 
 写在前面，工作7年，PHP也写了7年了。期间也写一些java和python，也对各语言的特点有一些自己的体会。
-这次咱们聊聊QA之PHPStan。
+这次咱们聊聊QA之余也来聊聊PHP语言本身。
 
 <!--more-->
 
@@ -21,5 +21,27 @@ tags: PHP
 
 - 简单的执行模型
 - 较短的反馈周期
+
+## QA之PHPStan
+
+言归正传，继续PHPStan
+
+### 安装
+
+```
+composer require --dev phpstan/phpstan
+```
+
+### 运行
+
+```
+vendor/bin/phpstan analyse src tests
+```
+
+## PHPmd
+
+```
+~/vendor/bin/phpmd src/Service/OrderService.php text codesize,unusedcode,naming
+```
 
 
