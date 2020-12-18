@@ -6,6 +6,8 @@ tags: java
 
 > 试图跳过spring,而学习spring boot是不可能的。学习java web开发，从基础开始学习。就应当了解http、servlet、tomcat
 
+<!--more-->
+
 - 起源
 - 它解决什么问题
 - 实现原理
