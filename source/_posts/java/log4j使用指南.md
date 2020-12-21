@@ -5,7 +5,6 @@ tags: java
 
 对于刚开始接触java的人来说，用什么来打日志似乎快被java的这么多概念搞懵了。log4j、log4j2、slf4j、logback?!!
 
-![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20201221143621.png)
 
 <!--more-->
 
