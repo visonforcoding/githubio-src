@@ -1,5 +1,5 @@
 ---
-title: 春天之前-http
+title: 春天之前-HTTP前世
 tags: java
 ---
 
@@ -15,6 +15,8 @@ tags: java
 # 起源
 
 1980年6月至12月间，伯纳斯-李在的CERN（欧洲核子研究组织）担任工作。实验室的研究人员需要大量的信息查阅或沟通。在那段时间里，他提出了个构想：创建一个以超文本系统为基础的项目，方便研究人员分享及更新讯息。
+
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20201222144257.png)
 
 1989年3月，他写下了他的初步构想，并在1990年重新配置。然后被他的经理麦克·森德尔（Mike Sendall）所接受。他使用与ENQUIRE系统相似的概念来创建万维网，为此他设计并构建了第一个网页浏览器。
 
@@ -117,6 +119,8 @@ public class Handler extends Thread {
 # 参考
 
 - https://developer.mozilla.org/zh-CN/docs/Web/HTTP
+
+- [廖雪峰-web基础](https://www.liaoxuefeng.com/wiki/1252599548343744/1304265903570978)
 
 
 
