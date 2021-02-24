@@ -281,4 +281,10 @@ public class RequestInitInterceptor implements HandlerInterceptor {
 ![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210224141855.png)
 
 
+## 参考
+
+- [Counting Queries per Request with Hibernate and Spring](http://knes1.github.io/blog/2015/2015-07-08-counting-queries-per-request-with-hibernate-and-spring.html)
+- [register an event handler](https://github.com/p6spy/p6spy/issues/362)
+
+
 
