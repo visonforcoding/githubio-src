@@ -149,8 +149,9 @@ log4jdbc.trim.sql.extrablanklines=true
 - ✔️ 不能和参数一起显示
 - ✔️ 不能显示limit参数
 - ❌ 能计数
-- ✔️  不能记录耗时
-
+- ✔️  能记录单个sql耗时
+- ❌ 不能统计总耗时
+  
 不足的是，单纯log4jdbc并不能满足所有。理论上log4jdbc+org.hibernate.EmptyInterceptor可以满足需求了
 
 ## P6Spy
