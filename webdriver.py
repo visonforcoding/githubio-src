@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 import coloredlogs
 import logging
 import time
@@ -11,15 +12,18 @@ import psutil
 class Driver:
 
     isClosed = False  # 浏览器是否关闭
-    logger = None    
+    logger = None
     autoClose = True  # 是否自动关闭webdriver进程
-
-    def __init__(self, wait=False, loggerConfig=None):
+    
+    def __init__(self, wait=False, loggerConfig=None, headless=False):
         """[自动化测试浏览器驱动]
 
         Keyword Arguments:
             wait {bool} -- [是否启用隐式等待] (default: {False})
         """
+        chrome_options = Options()
+        if headless:
+            chrome_options.add_argument("--headless")
         self.browser = webdriver.Chrome()
         # self.browser.launch_app(111331)
         self.start_time = time.time()
@@ -31,7 +35,7 @@ class Driver:
 
     def __del__(self):
         # 测试结束 关闭掉 浏览器
-        if(self.autoClose):
+        if (self.autoClose):
             self.close_browser()
         # self.close_webdriver()
 
@@ -133,6 +137,29 @@ class Driver:
                 continue
             else:
                 return element
+
+    def scrollToBootom(self):
+        """[滚动到底部]
+
+        """
+        js = "var q=document.documentElement.scrollTop=100000"
+        self.browser.execute_script(js)
+
+    def input(self, xpath, body):
+        """[输入内容]
+
+        Args:
+            xpath ([type]): [description]
+            body ([type]): [description]
+        """
+        try:
+            wait = WebDriverWait(self.browser, 30)
+            element = wait.until(
+                EC.presence_of_element_located((By.XPATH, xpath)))
+            element.send_keys(body)
+        except Exception:
+            self.logger.error('等待超时')
+            raise
 
     def click_element(self, xpath):
 
