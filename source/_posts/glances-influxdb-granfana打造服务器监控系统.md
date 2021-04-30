@@ -4,7 +4,7 @@ date: 2020-08-25 17:56:32
 tags: devops
 ---
 
-![](http://img.rc5j.cn/blog20200825175740.png)
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210430141234.png)
 
 服务监控就是你的眼睛，当你对服务器运行状况一无所知时，你应该感到坐立不安。
 
@@ -60,7 +60,7 @@ SHOW DATABASES   # 查看数据库
 ```
 再次执行`glances --export influxdb` ,可显示如下代表目前一切正常
 
-![](http://img.rc5j.cn/blog20200828161232.png)
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210430141339.png)
 
 ## granfana安装
 
@@ -80,10 +80,10 @@ systemctl enable grafana-server.service
 
 ### 配置数据源
 
-![](http://img.rc5j.cn/blog20200902134424.png)
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210430141408.png)
 
 grafana 还支持zipkin
 
-![](http://img.rc5j.cn/blog20200902134452.png)
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210430141436.png)
 
 
