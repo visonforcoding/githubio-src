@@ -143,3 +143,8 @@ php bin/cli.php kafka consume
 - 消息flush是做什么
 - poll又是做什么
 - 等等更多细节
+
+## broken
+
+
+
