@@ -78,9 +78,52 @@ systemctl status grafana-server
 systemctl enable grafana-server.service
 ```
 
+### docker-granfana安装
+
+```yml
+# docker-compose.yml
+version: "3.1"
+
+services:
+  grafana:
+    image: grafana/grafana:5.1.0
+    ports:
+      - 3001:3000
+    environment:
+        - GF_SECURITY_ADMIN_PASSWORD__FILE=/run/secrets/granfa_admin_pwd # 5.2.0之后才可用
+```
+
+###  nginx配置
+
+```conf
+ server {
+        listen       80;
+        server_name  grafana-dev.domain.cn;
+
+        #charset koi8-r;
+        location / {
+           proxy_pass  http://127.0.0.1:3001;
+           proxy_http_version 1.1;
+           proxy_set_header Upgrade $http_upgrade;
+           proxy_set_header Connection "upgrade";
+        }
+
+}
+```
+就可以在web上进行访问,初始的账号密码都是`admin`
+
+
 ### 配置数据源
 
 ![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210430141408.png)
+
+docker安装情况应注意docker容器ip 和宿主机ip
+
+```shell
+docker network ls # 查看docker网络
+docker network inspect $networkid # 查看具体网络信息
+```
+在配置`influxdb` 数据源时，如果你是用`docker`安装，需要保持`granfana`和`influxdb`是在同一个网段
 
 grafana 还支持zipkin
 
