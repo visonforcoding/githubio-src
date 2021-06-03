@@ -12,4 +12,4 @@ tags:
 
 访问 https://chrome.google.com/webstore/category/themes
 
-安装即可。
+安装即可啦。
