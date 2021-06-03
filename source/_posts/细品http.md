@@ -51,3 +51,4 @@ Cache-Control: public, max-age=31536000
 ### 304校验缓存
 
 ![](http://img.rc5j.cn/blog20200914114231.png)
+
