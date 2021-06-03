@@ -21,7 +21,7 @@ interactive_timeout=100
 ```
 重新查看结果
 
-![image](https://upload-images.jianshu.io/upload_images/4033700-8b58c117bc70e44a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210603144255.png)
 
 查看对守护进程连接的影响
 
@@ -39,7 +39,7 @@ interactive_timeout=100
 
 发现在100s后的连接已被主动断开
 
-![image](https://upload-images.jianshu.io/upload_images/4033700-22769213890725a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210603144315.png)
 
 代码中的场景是，**在wait_timeout之内无任何操作会自动关闭**
 
