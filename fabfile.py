@@ -92,6 +92,6 @@ def gh_pages():
     # local("ghp-import -b {github_pages_branch} {deploy_path} -p".format(**env))
     local("hexo generate")
     # local("cd content && git add . && git commit -m 'update md' && git push origin master && cd ../")
-    local("git add . && git commit -m 'update blog' && git push origin master --force")
+    local("git add . && git commit -m 'update blog src' && git push origin master --force")
 
     local("cd public && git add . && git commit -m 'update blog' && git push origin master --force && cd ../")
