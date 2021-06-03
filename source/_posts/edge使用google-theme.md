@@ -11,4 +11,5 @@ tags:
 改为启用！
 
 访问 https://chrome.google.com/webstore/category/themes
+
 安装即可。
