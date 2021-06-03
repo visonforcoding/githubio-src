@@ -5,7 +5,7 @@ tags: mysql
 ---
 
 
-首先，我们看下
+首先，我们来看下
 ```shell
 show GLOBAL VARIABLES like '%timeout%';
 ```
