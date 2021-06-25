@@ -23,6 +23,8 @@ interactive_timeout=100
 
 ![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210603144255.png)
 
+<!--more-->
+
 查看对守护进程连接的影响
 
 ```php
