@@ -156,6 +156,10 @@ docker network inspect $networkid # 查看具体网络信息
 
 ![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210811145551.png)
 
+添加一个看板
+
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210811150952.png)
+
 grafana 还支持zipkin
 
 ![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210430141436.png)
