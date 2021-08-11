@@ -62,6 +62,32 @@ SHOW DATABASES   # 查看数据库
 
 ![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210430141339.png)
 
+## 作为服务运行
+
+此时我们需要编写.service脚本作为服务后台运行
+
+```service
+[Unit]
+Description=glances  daemon
+After=network.target influxdb.service
+
+[Service]
+User=root
+Group=root
+ExecStart=/usr/local/bin/glances --quiet --export influxdb
+Type=simple
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+```
+
+命名该文件为`glances.service`并放到`/usr/lib/systemd/system`目录下
+
+`systemctl start glances` 启动
+
+更多的 `service`脚本编写可参考，http://www.jinbuguo.com/systemd/systemd.service.html
+
 ## granfana安装
 
 ```
@@ -123,7 +149,12 @@ docker安装情况应注意docker容器ip 和宿主机ip
 docker network ls # 查看docker网络
 docker network inspect $networkid # 查看具体网络信息
 ```
+
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210811145603.png)
+
 在配置`influxdb` 数据源时，如果你是用`docker`安装，需要保持`granfana`和`influxdb`是在同一个网段
+
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210811145551.png)
 
 grafana 还支持zipkin
 
