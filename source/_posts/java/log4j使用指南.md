@@ -8,6 +8,16 @@ tags: java
 
 <!--more-->
 
+## 盘点
+
+盘点下我们遇到过哪些日志
+
+- `java.util.logging`
+- `org.apache.commons.logging.Log`
+- `Log4j`和`Log4j2`
+- `SLF4J` 和 `Logback`
+
+简单概括 `Log4j`和`Log4j2`是`commons.logging`
 
 ## log4j
 
@@ -24,6 +34,7 @@ Apache Log4j 2是对 Log4j 的升级，它比其前身 Log4j 1.x 提供了重大
 所有这些功能使 Log4j2 成为这三个日志框架中最先进和最快的。
 
 ## Logback
+
 logback 是由 log4j 创始人设计的又一个开源日志组件，作为流行的 log4j 项目的后续版本，从而替代 log4j。
 
 Logback 的体系结构足够通用，以便在不同情况下应用。 目前，logback 分为三个模块：logback-core，logback-classic和logback-access。
