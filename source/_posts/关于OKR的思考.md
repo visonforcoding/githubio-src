@@ -136,7 +136,6 @@ OKR的实施步骤遵循经典的“PDCA”目标管理流程。以年度为例,
 
 ![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210907101053.png)
 
-
 这里我认为 第一 第二点尤为重要。
 
 ## 总结
