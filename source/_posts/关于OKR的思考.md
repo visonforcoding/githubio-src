@@ -11,6 +11,7 @@ tags: 管理
 
 <!--more-->
 
+
 于是我认为OKR+SMART = KPI. 但究竟是不是这样呢？
 
 ## OKR和KPI
