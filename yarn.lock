@@ -579,6 +579,15 @@
     "nunjucks" "^3.0.1"
     "utils-merge" "^1.0.0"
 
+"hexo-generator-sitemap@^2.1.0":
+  "integrity" "sha1-79k4BJ3b+alhoHf8xZR5GLpbITo="
+  "resolved" "https://registry.npm.taobao.org/hexo-generator-sitemap/download/hexo-generator-sitemap-2.1.0.tgz"
+  "version" "2.1.0"
+  dependencies:
+    "hexo-util" "^2.1.0"
+    "micromatch" "^4.0.2"
+    "nunjucks" "^3.1.6"
+
 "hexo-generator-tag@^1.0.0":
   "integrity" "sha1-VOwj3pQJx1WE6oHjYFelkDGwIvE="
   "resolved" "https://registry.npm.taobao.org/hexo-generator-tag/download/hexo-generator-tag-1.0.0.tgz"
@@ -648,7 +657,7 @@
   "resolved" "https://registry.nlark.com/hexo-theme-volantis/download/hexo-theme-volantis-4.3.1.tgz"
   "version" "4.3.1"
 
-"hexo-util@^2.0.0", "hexo-util@^2.4.0", "hexo-util@latest":
+"hexo-util@^2.0.0", "hexo-util@^2.1.0", "hexo-util@^2.4.0", "hexo-util@latest":
   "integrity" "sha1-3lY1NBEWuiVjp4mg6861WodSIa0="
   "resolved" "https://registry.nlark.com/hexo-util/download/hexo-util-2.5.0.tgz"
   "version" "2.5.0"
@@ -1005,7 +1014,7 @@
   "resolved" "http://registry.npm.taobao.org/normalize-path/download/normalize-path-3.0.0.tgz"
   "version" "3.0.0"
 
-"nunjucks@^3.0.1", "nunjucks@^3.2.1":
+"nunjucks@^3.0.1", "nunjucks@^3.1.6", "nunjucks@^3.2.1":
   "integrity" "sha1-GzNhUkcpDpTigmO12FXs52VkijE="
   "resolved" "https://registry.npm.taobao.org/nunjucks/download/nunjucks-3.2.3.tgz"
   "version" "3.2.3"
