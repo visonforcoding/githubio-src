@@ -6,7 +6,7 @@ tags: 架构
 
 ## 安装
 
-```yml
+```yaml
 version: '3.1'
 services:
     rabbitmq-manger:
