@@ -34,6 +34,7 @@ Servlet 侦听器用于侦听 Web 容器中的事件，例如，当您创建会�
 ![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20211128111619.png)
 
 
+
 ### 事件类型
 
 1. **javax.servlet.AsyncEvent** – 在 ServletRequest 上启动的异步操作（通过调用 ServletRequest#startAsync 或ServletRequest#startAsync（ServletRequest， ServletResponse））完成、超时或产生错误时触发的事件。
