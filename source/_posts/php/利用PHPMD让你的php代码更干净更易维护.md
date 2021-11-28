@@ -48,7 +48,7 @@ phpmd /path/to/source text codesize
 
 布尔标志参数违反单一责任原则（SRP）,可以将此类方法一拆为二。
 
-```php
+```PHP
 class Foo {
     public function drink($thirsty = true) {
         if($thirsty){
