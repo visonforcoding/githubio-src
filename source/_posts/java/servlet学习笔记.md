@@ -11,7 +11,6 @@ tags: java
 
 <!--more-->
 
-
 ## 历史
 
 ![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20211128105759.png)
@@ -33,7 +32,6 @@ Filter不光能拦截请求，对请求进行预处理，还能够修改返回�
 Servlet 侦听器用于侦听 Web 容器中的事件，例如，当您创建会话时，或在会话中放置属性时，或者如果您在另一个容器中被动化并激活时，要订阅这些事件，
 
 ![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20211128111619.png)
-
 
 ### 事件类型
 

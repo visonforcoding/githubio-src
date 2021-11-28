@@ -5,7 +5,6 @@ tags: java
 ---
 
 > 习惯了php项目之后，恐怕非常不喜欢操作xml吧.本章将介绍servlet+mybatis无xml配置模式。
-
 <!--more-->
 
 ## 依赖
