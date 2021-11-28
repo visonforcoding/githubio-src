@@ -94,4 +94,4 @@ def gh_pages():
     # local("cd content && git add . && git commit -m 'update md' && git push origin master && cd ../")
     local("git add . && git commit -m 'update blog src' && git push origin master --force")
 
-    local("cp -rf ./public/* ../public/ && cd ../public && git add . && git commit -m 'update blog' && git push origin master --force && cd ../")
+    local("cp -rf ./public/* ../visonforcoding.github.io/ && cd ../visonforcoding.github.io && git add . && git commit -m 'update blog' && git push origin master --force && cd ../")
