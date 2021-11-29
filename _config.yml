@@ -100,10 +100,14 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: hexo-theme-matery
+theme: ayer
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: ''
 baidu_analytics_key: e99feed4245dcdf8a16ad3d62e236e14
+# 首页广告配置
+# 可以根据需要自行增加ad_3，ad_4...，留空则不显示
+
+
