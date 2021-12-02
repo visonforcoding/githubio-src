@@ -3,7 +3,6 @@ title: 'Servlet Filiter 和 Spring Intercetors,记录请求日志'
 date: 2021-12-02 10:46:17
 tags: java
 ---
-
 > 在前面的文章我们有看到Servlet Filiter的作用。与之类似的Spring中我们知道有拦截器Intercetors。
 
 现在有1个需求，记录request的所有请求信息，URL、请求方法、请求体。我们自然而然会想到使用`Filiter`或`Intercetors`
