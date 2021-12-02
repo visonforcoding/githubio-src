@@ -165,6 +165,14 @@ public class UploadCustomerDocumentsServlet extends HttpServlet {
 }
 ```
 
+## Api
+
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20211201093231.png)
+
+
+‎Java servlet API 由两个包组成。一个是javax.servlet，另一个是javax.servlet.http。javax.servlet 包包含可用于编写独立于协议的 servlet 的所有类和接口，javax.servlet.http 包含编写 HTTP 特定 servlet 所需的所有类和接口。让我们详细探讨一下 Java Servlet API。‎
+
+
 
 ## 参考阅读
 
