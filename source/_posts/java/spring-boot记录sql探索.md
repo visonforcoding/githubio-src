@@ -14,7 +14,6 @@ tags: java
 - 能计数累加,统计一次请求中sql执行的总数和总耗时
 
 <!--more-->
-
 ## spring原生能力
 
 ```ini
@@ -323,7 +322,6 @@ public class RequestInitInterceptor implements HandlerInterceptor {
 ```
 
 这样最终，我们可以安全地统计一个请求当中的sql执行总次数了
-
 
 
 
