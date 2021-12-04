@@ -324,12 +324,9 @@ public class RequestInitInterceptor implements HandlerInterceptor {
 这样最终，我们可以安全地统计一个请求当中的sql执行总次数了
 
 
-
 ## 参考
 
 - [Counting Queries per Request with Hibernate and Spring](http://knes1.github.io/blog/2015/2015-07-08-counting-queries-per-request-with-hibernate-and-spring.html)
 - [register an event handler](https://github.com/p6spy/p6spy/issues/362)
 - [Threadlocal 处理线程安全问题](https://www.baeldung.com/java-threadlocal)
-
-
 
