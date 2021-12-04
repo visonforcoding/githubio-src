@@ -1,6 +1,6 @@
 ---
-title: spring-boot记录sql探索
-date: 2021-02-23 19:28:29
+title: spring-boot记录并统计sql探索,线程安全方式
+date: 2021-12-04 11:28:29
 tags: java
 ---
 
@@ -280,11 +280,58 @@ public class RequestInitInterceptor implements HandlerInterceptor {
 
 ![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210224141855.png)
 
+### 线程安全问题
+
+以上做法其实还有个问题,并没有解决线程安全问题。用ab测试后会发现,sql统计仍然有问题。此时我们需要用到`Threadlocal`
+在定义的全局静态属性当中实际上已经有状态了，而多线程当中的共享状态必然会发生意想不到的问题。所以这里要使用并发编程的相关处理办法。
+
+```java
+//使用ThreadLocal 定义统计属性
+public class App {
+
+    public static ThreadLocal<Integer> count = ThreadLocal.withInitial(() -> 0);;
+
+}
+```
+
+其次,**当Threadlocal与线程池一起使用的时候还需要额外的注意**。简单的描述下会发生的问题：
+
+1. 应用程序从线程池取出1个线程
+2. 然后存储了一些线程内的变量到该线程
+3. 一旦该线程处理完毕，应用程序便会将这个线程放回到线程池
+4. 当这个线程又被再次拿出来处理另外一个请求
+5. 因为应用程序上次没有进行专门的清理动作，所以在处理新的请求时使用的可能就是相同的`ThreadLocal`数据
+
+因此我们需要进行一些必要的清理动作
+
+```java
+//拦截器当中 在统计完毕时移除当前线程的Threadlocal变量
+public class RequestInitInterceptor implements HandlerInterceptor {
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        return true;
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        log.info(String.format("finish request... 执行sql %d 次", App.count.get()));
+        App.count.remove();
+    }
+}
+
+```
+
+这样最终，我们可以安全地统计一个请求当中的sql执行总次数了
+
+
+
 
 ## 参考
 
 - [Counting Queries per Request with Hibernate and Spring](http://knes1.github.io/blog/2015/2015-07-08-counting-queries-per-request-with-hibernate-and-spring.html)
 - [register an event handler](https://github.com/p6spy/p6spy/issues/362)
+- [Threadlocal 处理线程安全问题](https://www.baeldung.com/java-threadlocal)
 
 
 
