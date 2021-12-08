@@ -34,3 +34,11 @@ cover:
   enable: false
   path: /images/cover1.jpg # /source/images目录下附送多张精美壁纸，可任意更换
   logo: /images/ayer.svg # 如果不要直接设置成false
+# type：0-close reward； 1-only open in article which you have configured reward:true； 2-open in all articles
+reward_type: 2
+# reward word
+reward_wording: "Buy me a cup of coffee~"
+# qrcode image path
+# alipay: /images/alipay.jpg
+# qrcode image path
+weixin: /images/wallet.png
