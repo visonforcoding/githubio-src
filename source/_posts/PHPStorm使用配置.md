@@ -35,6 +35,7 @@ ide.tree.horizontal.default.autoscrolling=false
 ## 隐藏nbproject
 
 nbproject是netbeans的配置文件夹,在phpstorm项目中显示非常难受。
+
 Preferences->File Types -> Files and Folders to Ignore.
 
 

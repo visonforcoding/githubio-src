@@ -39,6 +39,6 @@ reward_type: 2
 # reward word
 reward_wording: "Buy me a cup of coffee~"
 # qrcode image path
-# alipay: /images/alipay.jpg
+alipay: /images/alipay.jpeg
 # qrcode image path
 weixin: /images/wallet.png
