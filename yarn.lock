@@ -1042,11 +1042,6 @@
     "open" "^6.3.0"
     "serve-static" "^1.14.1"
 
-"hexo-theme-ayer@^1.9.5":
-  "integrity" "sha1-cP3eSs3QRawaXXgZiv6oOgpJWIc="
-  "resolved" "https://registry.nlark.com/hexo-theme-ayer/download/hexo-theme-ayer-1.9.5.tgz"
-  "version" "1.9.5"
-
 "hexo-theme-volantis@^4.3.1":
   "integrity" "sha512-caZd9fTiK62ZdskgdD5zenbg8E208kwKYQx8aYgV3moj3cUO02HMyxTuRY0WPcph/q+2MKa+k7xzT6C+pxI4IQ=="
   "resolved" "https://registry.npmjs.org/hexo-theme-volantis/-/hexo-theme-volantis-4.3.1.tgz"
