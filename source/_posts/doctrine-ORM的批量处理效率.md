@@ -52,6 +52,8 @@ $em->clear();
 - 逐条flush,需要执行n次insert和commit,即2n次通信。
 - doctrine bulk操作是n+n/m次，通信次数会少很多。
 
+并不意味着将batchSize设置最大就是最有效的方式，batchSize越大也意味着flush的工作将会更耗时。
+
 但与mysql 本身的批量处理还是会多非常多次的通信。
 
 ```sql
