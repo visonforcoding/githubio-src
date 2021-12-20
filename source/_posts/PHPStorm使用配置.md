@@ -24,7 +24,6 @@ tags: 软件
 但是还有个问题是，项目名会显示项目地址，这点很烦。可以通过自定义phpstorm属性办到。
 
 打开 Help/Edit Custom Properties...
-
 新建 idea.properties file
 
 ```ini
