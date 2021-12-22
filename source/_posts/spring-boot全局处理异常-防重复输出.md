@@ -87,6 +87,6 @@ public class ControllerAdvice {
     }
 ```
 
-通过`response.reset()`重置掉response.
+通过`response.reset()`重置掉response。
 
 关于完整的异常处理可参考:[https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc](https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc)
