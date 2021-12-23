@@ -129,11 +129,217 @@ java.util.Calendar
 ```java
 @Temporal(TemporalType.TIME)
  private Date tokenExpiredTime;
+
 ```
+
+## Entity Relationships
+
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20211223101826.png)
+
+实体关系，RDBMS与NoSQL最直接的区别,直接影响到了我们应用程序的业务数据建模。那么JPA是如何来表示实体关系呢。
+
+### 一对一
+
+关系A和关系B是一对一的关系，一般在一个表里有另一个表的关联id,进行关联。
+
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20211223102537.png)
+
+例如,用户与当前家庭住址是一对一关系。商品与商品类别是一对一关系。
+
+我们先按官方指导来使用。
+
+```java
+//定义地址实体
+@Entity
+@Table(appliesTo = "address", comment = "地址表")
+public class Address extends BaseEntity {
+    @Column(columnDefinition = "varchar(50) NOT NULL COMMENT '详细地址'")
+    private String detail;
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+}
+```
+
+```java
+//定义用户实体
+@Entity
+public class User extends BaseEntity {
+
+    @NotBlank(message = "名字不可为空")
+    private String name;
+
+    private short age;
+
+    private String mobile;
+    
+    @OneToOne
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private Address address;
+}
+```
+
+`JoinColumn`注解定义了User表的关联字段和关联表address的关联字段。对应到数据库里会自动生成外键并行成外键约束。
+
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20211223135649.png)
+
+再来看看当表被关联了如何做CURD。
+
+```java
+@RestController
+@Log4j2
+public class UserController {
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @PostMapping(name = "用户添加", path = "/user/add")
+    public Response add(@Valid @RequestBody User user) {
+        Optional<User> user1 = userRepository.findByName(user.getName());
+        userRepository.save(user);
+        return new Response(0, "获取成功", user);
+    }
+
+    @GetMapping(name = "用户详情",path = "/user/{id}")
+    public Response detail(@PathVariable Long id){
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return new Response(ResponseCode.success, "获取成功", user.get());
+        }
+        return new Response(ResponseCode.noDataFound, "获取失败");
+    }
+
+}
+```
+
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20211223135833.png)
+
+在数据提交时，关联表的数据用嵌套的json进行提交即可。数据查询时使用`Repository`会自动进行关联查询,查看日志可以看到实际的sql.
+
+```sql
+SELECT
+    user0_.id AS id1_4_0_,
+    user0_.create_time AS create_t2_4_0_,
+    user0_.modify_time AS modify_t3_4_0_,
+    user0_.address_id AS address_7_4_0_,
+    user0_.age AS age4_4_0_,
+    user0_.mobile AS mobile5_4_0_,
+    user0_.name AS name6_4_0_,
+    address1_.id AS id1_0_1_,
+    address1_.create_time AS create_t2_0_1_,
+    address1_.modify_time AS modify_t3_0_1_,
+    address1_.detail AS detail4_0_1_
+FROM
+    USER user0_
+    LEFT OUTER JOIN address address1_ ON user0_.address_id = address1_.id
+WHERE
+    user0_.id = 3
+```
+
+**这点在某种程度上会让开发变得很方便，但也会有潜在的性能风险，因为多表关联数据量大的情况下必然会使得性能下降**
+
+查询结果也以嵌套json对象的形式展现这点非常棒。
+
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20211223140828.png)
+
+### javax.persistence.CascadeType
+
+在定义关联关系时可以定义,级联的关系操作。
+
+|类型| 说明| 解释
+| --- | --- | --- |
+|ALL |级联所有实体状态转换 |拥有所有级联操作权限。
+|PERSIST |级联实体持久化操作 |当父实体被持久化时，会连同持久化子实体
+|MERGE |级联实体合并操作| 当Student中的数据改变，会相应地更新Course中的数据。
+|REMOVE |级联实体删除操作| 删除当前实体时，与它有映射关系的实体也会跟着被删除。
+|REFRESH |级联实体刷新操作| 假设场景 有一个订单,订单里面关联了许多商品,这个订单可以被很多人操作,那么这个时候A对此订单和关联的商品进行了修改,与此同时,B也进行了相同的操作,但是B先一步比A保存了数据,那么当A保存数据的时候,就需要先刷新订单信息及关联的商品信息后,再将订单及商品保存。
+|DETACH |级联实体分离操作|
+
+### FetchType
+
+在定义实体关系的`OneToOne`或其他关系注解时，我们可以定义fetch属性。
+
+- FetchType.LAZY
+- FetchType.EAGER
+
+lazy即懒惰模式eager渴望模式。表现差异在于eager会一开始就查找出关联实体，而lazy模式是当你调用相应关联get方法时才会查询。本质区别在于lazy是分sql查询,eager是join关联查询。
+
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20211223144919.png)
+
+当我们定义`@OneToOne(fetch = FetchType.LAZY)`查看日志的话，我们可以看到之前的join变成了2个select。
+
+不过会存在一个问题是在被指定为lazy的属性对象里返回的json会有个`hibernateLazyInitializer`,如果你不想展示的话可以使用注解`JsonIgnoreProperties`定义到该对象类
+
+```java
+@JsonIgnoreProperties(value={"hibernateLazyInitializer"})
+public class Address extends BaseEntity {
+}
+```
+
+### 思考
+
+当在大型应用当中,我建议不要进行外键约束和不要使用EAGER。因为关联查询往往会导致慢查询而拖垮数据库，而1次的sql和2-3次的sql其实在接口层面差异并不明显。
+
+## ManyToMany
+
+在许多场景当中，关系都是多对多的对应关系。拿电商业务来说，订单与商品的关系是多对多的关系。即1个订单可以有多个商品，1个商品可以在多个订单当中。
+
+```java
+@Entity(name = "dorder")
+@Table(appliesTo = "dorder", comment = "订单表")
+public class Order extends BaseEntity {
+
+    private String orderNo;
+
+    private Long uid;
+
+    private Integer status;
+
+    private Integer orderPriceFen;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT),
+            inverseForeignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    private Set<Goods> goods;
+}
+```
+
+- 我们在订单表中定义了goods属性并用`ManyToMany`表示是多对多的关系。
+- 使用`ConstraintMode.NO_CONSTRAINT`去除外键约束。
+- jpa会生成关联表
+
+```java
+
+    @RequestMapping(path = "/order/create", name = "订单创建", method = RequestMethod.POST)
+    public Response createOrder(@Valid @RequestBody Order order) {
+        order.setOrderNo(String.format("%d", new Date().getTime()));
+        order.setUid(3L);
+        Set<Goods> orderGoods = new HashSet<>();
+        for (Goods g : order.getGoods()) {
+            Optional<Goods> goods = goodsRepository.findById(g.getId());
+            goods.ifPresent(orderGoods::add);
+        }
+        order.setGoods(orderGoods);
+        orderRepository.save(order);
+        return new Response(ResponseCode.success, "创建成功", order);
+    }
+```
+
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20211223190914.png)
+
+### Many-to-Many With a New Entity
+
+有种场景是多对多的关联表还需要其他属性，可能这是实际当中更为常见的情况。比如订单商品表还需要记录商品数量,这个时候最好的方式是用一个新的Entity来建立多对多的关联关系。
 
 ## 参考
 
 1. [https://fanlychie.github.io/post/jpa-column-annotation.html](https://fanlychie.github.io/post/jpa-column-annotation.html)
 2. [https://dzone.com/articles/what-is-the-difference-between-hibernate-and-sprin-1](https://dzone.com/articles/what-is-the-difference-between-hibernate-and-sprin-1)
-
-3.
