@@ -339,6 +339,48 @@ public class Order extends BaseEntity {
 
 有种场景是多对多的关联表还需要其他属性，可能这是实际当中更为常见的情况。比如订单商品表还需要记录商品数量,这个时候最好的方式是用一个新的Entity来建立多对多的关联关系。
 
+```java
+@Entity
+public class OrderGoods extends BaseEntity {
+
+    @Column(columnDefinition = "int NOT NULL comment '数量'")
+    private int nums;
+
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    @JsonIgnoreProperties(value = {"orderGoods"})
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    private Goods goods;
+}
+```
+
+还需对`Goods`和`Order`进行`mappedBy`,防止被重复关联。
+
+```java
+@Entity
+@Table(appliesTo = "goods", comment = "商品表")
+public class Goods extends BaseEntity {
+   @OneToMany(mappedBy = "goods")
+    private Set<OrderGoods> orderGoods;
+}
+
+@Entity(name = "dorder")
+@Table(appliesTo = "dorder", comment = "订单表")
+public class Order extends BaseEntity {
+    @OneToMany(mappedBy = "order")
+    @Transient
+    @JsonIgnoreProperties(value = {"order"})
+    private Set<OrderGoods> orderGoods;
+}
+```
+
+最终完成订单和订单商品的添加
+
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20211223232404.png)
+
 ## 参考
 
 1. [https://fanlychie.github.io/post/jpa-column-annotation.html](https://fanlychie.github.io/post/jpa-column-annotation.html)
