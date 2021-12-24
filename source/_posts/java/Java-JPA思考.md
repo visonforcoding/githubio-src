@@ -381,6 +381,15 @@ public class Order extends BaseEntity {
 
 ![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20211223232404.png)
 
+### 问题
+
+以上代码与直接的`ManyToMany`方式不同的是，我没能实现主表的save让JPA自动将关联表数据也插入,是我手动处理的。
+因为遇到的问题现在还没解决。
+
+想让其自动将关联数据save,把hibernate的info日志打开。会发现`Collection found: was: [<unreferenced>] (initialized)`日志记录,应该是哪里不对，但是目前不纠结了。
+
+以上代码虽然能完成需求但是数据插入并不是在一个事务内执行的，因此实际生产当中这种写法也不可取,需写在一个事务内。
+
 ## 参考
 
 1. [https://fanlychie.github.io/post/jpa-column-annotation.html](https://fanlychie.github.io/post/jpa-column-annotation.html)
