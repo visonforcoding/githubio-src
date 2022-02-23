@@ -6,6 +6,8 @@ tags:
 
 之前读了一本书《企业IT架构转型之道:阿里巴巴中台战略思想与架构实战》，期中有关于数据库中间件的部分实现令我映像深刻。
 
+![图片来源:https://shardingsphere.apache.org/document/current/en/concepts/pluggable/](https://vison-blog.oss-cn-beijing.aliyuncs.com/20220223170048.png)
+
 中间件解决了几个问题：
 
 - 数据库使用治理,通过mysql proxy的形式,能在开发时期的建表不规范ddl、生产的查询潜在危害sql进行预警、拦截、监控等操作
@@ -92,8 +94,8 @@ public class ThreadQuery extends Thread {
 
 ```
 
-此代码只是一个非常基础的实现demo,真正生产还需要解决很多其他问题：
+此代码只是一个非常基础的实现demo,真正上生产还需要解决很多其他问题：
 
 1. 线程池链接池解决链接和线程建立开销
 2. 并发数的最佳数量设置
-3. limit和order by的处理,设想`select * from user where age = 25 limit 10 order by id desc`该如何从sharding表进行处理
+3. limit和order by的处理,设想`select * from user where age = 25  order by create_time desc limit 10`该如何从sharding表进行处理
