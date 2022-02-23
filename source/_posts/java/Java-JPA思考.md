@@ -39,6 +39,27 @@ Hibernate, Eclipse Link, 和其他的JPA provider。
 
 ![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20211222145130.png)
 
+### hibernate
+
+spring-data-jpa 默认使用的是hibernate,我们可以查看使用的版本。
+
+```java
+public class Application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+        log.info(String.format("spring version is : %s",SpringVersion.getVersion()));
+        //查看 hibernate 版本
+        log.info(String.format("hibernate version is : %s",Version.getVersionString()));
+    }
+
+}
+```
+
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20211224111236.png)
+
+更多官方文档可查阅 [https://docs.jboss.org/hibernate/orm/5.6/userguide/html_single/Hibernate_User_Guide.html](https://docs.jboss.org/hibernate/orm/5.6/userguide/html_single/Hibernate_User_Guide.html)
+
 ## 注解 Annotations
 
 通常，Xml文件用于配置特定组件，或映射两种不同规格的组件。 在我们的例子中，我们必须在框架中单独维护xml。 这意味着在编写映射xml文件时，我们需要将POJO类属性与mapping.xml文件中的实体标记进行比较。
