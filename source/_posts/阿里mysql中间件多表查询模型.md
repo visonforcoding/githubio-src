@@ -96,3 +96,4 @@ public class ThreadQuery extends Thread {
 
 1. 线程池链接池解决链接和线程建立开销
 2. 并发数的最佳数量设置
+3. limit和order by的处理,设想`select * from user where age = 25 limit 10 order by id desc`该如何从sharding表进行处理
