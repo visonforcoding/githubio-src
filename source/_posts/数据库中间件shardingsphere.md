@@ -13,6 +13,8 @@ tags: mysql
 
 今天我们来看看`shardingsphere`的解决方案。
 
+<!--more-->
+
 官方文档：[https://shardingsphere.apache.org/document/5.1.0/en/overview/](https://shardingsphere.apache.org/document/5.1.0/en/overview/)
 
 当前`shardingsphere`有3个产品
