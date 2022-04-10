@@ -48,6 +48,8 @@ websocket由http协议升级而成，client的请求头必须包含`Upgrade: web
 
 一旦连接建立起来，客户端和服务器就可以以全双工模式来回发送 WebSocket 数据或文本帧。
 
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20220410153642.png)
+
 ## 实现
 
 我们用java来实现下websocket的协议。
