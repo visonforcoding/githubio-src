@@ -1,5 +1,5 @@
 ---
-title: 地理位置geo处理之mongodb geo 索引
+title: 数据|地理位置geo处理之mongodb geo 索引
 date: 2017-12-01 10:34
 tags: 方案
 ---
@@ -74,9 +74,8 @@ for i in range(thread_nums):
     t.start()
 
 ```
+
 ![image.png](http://upload-images.jianshu.io/upload_images/4033700-dda526bdfcc5c759.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-
 
 以上脚本创建10个线程，10个线程插入4万条数据。耗费52.43s执行完,总共插入40万条数据
 
@@ -97,8 +96,6 @@ cpu: intel core i5
 ```js
 db.runCommand({geoNear:'driver', near:[134.38753,18.56734], spherical:true, maxDistance:20000/6378000, distanceMultiplier:6378000});
 ```
+
 - 耗时：0.001s
 - explain:使用索引
-
-
-

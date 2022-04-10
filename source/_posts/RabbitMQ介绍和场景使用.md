@@ -16,6 +16,7 @@ services:
           - 5672:5672
           - 8091:15672
 ```
+
 使用docker进行快速安装
 
 ## 历史
@@ -31,18 +32,15 @@ services:
 
 ![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210616101427.png)
 
-
 > RabbitMQ is a message broker: it accepts and forwards messages. You can think about it as a post office: when you put the mail that you want posting in a post box, you can be sure that Mr. or Ms. Mailperson will eventually deliver the mail to your recipient. In this analogy, RabbitMQ is a post box, a post office and a postman.
 
 这是官网最开头的一段介绍,这里将RabbitMQ类比为邮局派信场景，RabbitMQ扮演邮箱、邮局、邮差的角色。这里也看到了 `broker` 这个单词，Kafka也有broker这个概念，这里我们暂且将它理解为`代理`的意思。
-
 
 ## 生产者 producer
 
 简单理解就是发送消息的程序
 
 ![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210618112249.png)
-
 
 ## 消费者 consumer
 
@@ -62,12 +60,13 @@ services:
 
 **Exchange Type**
 
-- direct  直连 
+- direct  直连
 - fanout  扇出
 - topic   主题
 - headers  头
 
 除交换机类型外，在声明交换机时还可以附带许多其他的属性，其中最重要的几个分别是：
+
 - Name
 - Durability （消息代理重启后，交换机是否还存在）
 - Auto-delete （当所有与之绑定的消息队列都完成了对此交换机的使用后，删掉它）
@@ -86,12 +85,12 @@ services:
         $ticket = null
     )
 ```
+
 持久（durable）、暂存（transient）。持久化的交换机会在消息代理（broker）重启后依旧存在，而暂存的交换机则不会（它们需要在代理再次上线后重新被声明）。然而并不是所有的应用场景都需要持久化的交换机。
 
 **默认交换机**
 
 那就是每个新建队列（queue）都会自动绑定到默认交换机上，绑定的路由键（routing key）名称与队列名称相同。
-
 
 **直连交换机 Direct**
 
@@ -102,6 +101,7 @@ services:
 ```
 
 它是如何工作的：
+
 - 将一个队列绑定到某个交换机上，同时赋予该绑定一个路由键（routing key）
 - 当一个携带着路由键为hello_key的消息被发送给直连交换机hello_exchange时，交换机会把它路由给hello_queue的队列。
 
@@ -132,6 +132,7 @@ $body = $faker->text(20);
 $msg = new AMQPMessage($body, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT]);
 $channel->basic_publish($msg, 'test.fanout');
 ```
+
 `RabbitFanoutProduce` 生产者定义了一个`test.fanout` 交换机类型是`AMQPExchangeType::FANOUT`
 
 ```php
@@ -187,10 +188,10 @@ eg： 客服系统、运营系统、财务系统同时订阅订单系统的订�
 细化下场景举个例子：
 
 当订单完结 order close:
+
 - 客服系统需要给客户发送一个客户满意度调查
 - 运营系统需要发送一张按订单消费金额配比的优惠券
 - 财务系统需要计算这笔订单的入账
-
 
 **主题交换机 topic**
 
@@ -230,16 +231,13 @@ $channel->basic_publish($msg, 'test.topic', 'lazy.orange.monkey');
 
 ![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20210618115131.png)
 
-
 可以看到3个消息，发送到了2个队列。Q1和Q2各有2个，因为lazy.orange.monkey进入了2个队列。
-
 
 **头交换机 header**
 
 有时消息的路由操作会涉及到多个属性，此时使用消息头就比用路由键更容易表达，头交换机（headers exchange）就是为此而生的。头交换机使用多个消息属性来代替路由键建立路由规则。通过判断消息头的值能否与指定的绑定相匹配来确立路由规则。
 
 它提供更多的匹配，可设置x-match 为any 或all 来控制是任意匹配还是全部匹配。
-
 
 ### 队列 queue
 
@@ -254,6 +252,7 @@ AMQP中的队列（queue）跟其他消息队列或任务队列中的队列是�
 ### 消息确认
 
 消费者应用（Consumer applications） - 用来接受和处理消息的应用 - 在处理消息的时候偶尔会失败或者有时会直接崩溃掉。而且网络原因也有可能引起各种问题。这就给我们出了个难题，AMQP代理在什么时候删除消息才是正确的？AMQP 0-9-1 规范给我们两种建议：
+
 - 当消息代理（broker）将消息发送给应用后立即删除。（使用AMQP方法：basic.deliver或basic.get-ok）
 - 待应用（application）发送一个确认回执（acknowledgement）后再删除消息。（使用AMQP方法：basic.ack）
 
@@ -276,11 +275,9 @@ $channel->basic_consume('task_queue', '', false, false, false, false, $callback)
 
 当一个消费者接收到某条消息后，处理过程有可能成功，有可能失败。应用可以向消息代理表明，本条消息由于“拒绝消息（Rejecting Messages）”的原因处理失败了（或者未能在此时完成）。当拒绝某条消息时，应用可以告诉消息代理如何处理这条消息——销毁它或者重新放入队列。当此队列只有一个消费者时，请确认不要由于拒绝消息并且选择了重新放入队列的行为而引起消息在同一个消费者身上无限循环的情况发生。
 
-
 ### 连接
 
 AMQP连接通常是长连接。AMQP是一个使用TCP提供可靠投递的应用层协议。AMQP使用认证机制并且提供TLS（SSL）保护。当一个应用不再需要连接到AMQP代理的时候，需要优雅的释放掉AMQP连接，而不是直接将TCP连接关闭。
-
 
 ### 虚拟主机 vhost
 
@@ -323,6 +320,7 @@ $connection = new AMQPStreamConnection('192.168.106.179', 5672, 'guest', 'guest'
         return Command::SUCCESS;
     }
 ```
+
 ```php
 消费者
  public function handPay()
@@ -346,13 +344,16 @@ $connection = new AMQPStreamConnection('192.168.106.179', 5672, 'guest', 'guest'
         }
     }
 ```
- 
+
 代码示例中 生成者根据订单状态动态生产相应路由键消息到交换机，消费者订阅自己所需的状态到自己的队列当中进行消费。
 
 例如 `handPay` 消费者只订阅待支付类型。
- 
+
+## 注意
+
+ 1. PHP的api在往未定义的交换机生产消息时不会抛出异常
 
 ## 参考
 
-1. https://rabbitmq.mr-ping.com/
-2. https://www.rabbitmq.com/getstarted.html
+1. <https://rabbitmq.mr-ping.com/>
+2. <https://www.rabbitmq.com/getstarted.html>

@@ -1,10 +1,10 @@
 ---
-title: 用phpunit进行单元测试
+title: 流程|用phpunit进行单元测试
 date: 2021-07-23 09:48:24
 tags: php
 ---
 
-最近读了一本书《clean code》。深有感悟，感觉非常接底气，讲到了日常编码中真正遇到的困扰。大致我总结下就是要做几件事：
+最近读了一本书《clean code》。深有感悟，感觉非常接地气，讲到了日常编码中真正遇到的困扰。大致我总结下就是要做几件事：
 
 - 重构，定期重构，保持重构
 - clean code,编写整洁、易维护的代码
@@ -29,7 +29,6 @@ tags: php
 但是我还是选择全局安装，因为不想将本地太多依赖。
 
 ## 使用
-
 
 ### IDE提示
 
@@ -75,6 +74,7 @@ final class RedisCacheTest extends TestCase
 ```shell
 phpunit --bootstrap tests/bootstrap.php --verbose tests/case 
 ```
+
 该命令是执行测试 tests/case下的所有测试用例文件，当然你也可以具体到只执行单个文件。
 
 `--bootstrap`
@@ -100,3 +100,29 @@ phpunit --bootstrap tests/bootstrap.php --verbose tests/case
 从 XML 文件中读取配置信息。
 
 如果`phpunit.xml` 或 `phpunit.xml.dist`（按此顺序）存在于当前工作目录并且未使用 `--configuration`，将自动从此文件中读取配置。
+
+## 覆盖率
+
+```shell
+phpunit -d memory_limit=256M tests/Unit/TestMessage.php --coverage-html ./tests/html --whitelist app/Services/MessageService.php
+```
+
+带上`--coverage-html`选项后,phpunit会生成覆盖率检测报告。使用者可以以此来查看项目代码当中,被测试的情况。哪些代码经过了测试，哪些未被测试。
+
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20220406134808.png)
+
+如上图，展示了方法的测试覆盖情况。有1个覆盖率是0,另一个是100%。
+
+为什么方法还有覆盖百分比？ 一个方法有不同逻辑条件流程，测试参数不一定能把所以的逻辑覆盖到。可能测试了`if`的情况,`else`的并未覆盖到。所以有的时候,测试用例需要对一个测试方法进行多次调用测试。
+
+```php
+    public function testFoo()
+    {
+        $service = new ExampleService();
+        $r = $service->foo(1,33);
+        $this->assertIsInt($r);
+        $r = $service->foo(12,33);
+        $this->assertIsInt($r);
+
+    }
+```
