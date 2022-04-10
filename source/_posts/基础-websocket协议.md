@@ -49,3 +49,146 @@ websocket由http协议升级而成，client的请求头必须包含`Upgrade: web
 一旦连接建立起来，客户端和服务器就可以以全双工模式来回发送 WebSocket 数据或文本帧。
 
 ## 实现
+
+我们用java来实现下websocket的协议。
+
+```java
+package com.vison.magpie.websocket;
+
+import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.Logger;
+
+import java.io.IOException;
+import java.lang.management.ManagementFactory;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
+
+@Slf4j
+public class WsServer {
+
+
+    private static Map<String, Socket> sockMap = new HashMap();
+
+    private static int port = 9527;
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws IOException {
+        String name = ManagementFactory.getRuntimeMXBean().getName();
+        int port = WsServer.port;
+        ServerSocket ss = new ServerSocket(port);
+        log.info(String.format("server is running in %s of %s", port,name));
+        for (;;) {
+            Socket sock = ss.accept();
+            log.info("connected from " + sock.getRemoteSocketAddress());
+            Handler t = new Handler(sock);
+            t.start();
+        }
+    }
+}
+
+```
+
+```java
+package com.vison.magpie.websocket;
+
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.MessageDigestAlgorithms;
+
+import java.io.*;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+@Slf4j
+public class Handler extends Thread {
+    Socket sock;
+
+    public Handler(Socket sock) {
+        this.sock = sock;
+    }
+
+    public void run() {
+        try (InputStream input = this.sock.getInputStream()) {
+            try (OutputStream output = this.sock.getOutputStream()) {
+                handle(input, output);
+            }
+        } catch (Exception e) {
+            System.out.print(e.getClass());
+            try {
+                this.sock.close();
+            } catch (IOException ioe) {
+            }
+            System.out.println("client disconnected.");
+        }
+    }
+
+    private void handle(InputStream input, OutputStream output) throws IOException, InterruptedException {
+        log.info("Process new http request...");
+        var writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
+        Scanner s = new Scanner(input, StandardCharsets.UTF_8);
+        String data = s.useDelimiter("\r\n").next();
+        Matcher get = Pattern.compile("^GET").matcher(data);
+        if (get.find()) {
+            log.info("match get");
+            String matchWebsocketKey = "";
+            while (s.hasNext()) {
+                String thisLine = s.next();
+                Matcher matchWebsocket = Pattern.compile("Sec-WebSocket-Key: (.*)").matcher(thisLine);
+                if (matchWebsocket.find()) {
+                    matchWebsocketKey = matchWebsocket.group(1);
+                    System.out.print(matchWebsocket.group());
+                    handlerWebsocket(matchWebsocketKey,writer);
+                    while (true){
+                        int count=-1;
+                        byte[] buff=new byte[1024];
+                        count=input.read(buff);
+                        System.out.println("接收的字节数："+count);
+                        for(int i=0;i<count-6;i++){
+                            buff[i+6]=(byte)(buff[i%4+2]^buff[i+6]);
+                        }
+                        System.out.println("接收的内容："+new String(buff, 6, count-6, "UTF-8"));
+                        Thread.sleep(100);
+                    }
+                }
+            }
+        }
+    }
+
+    private void handlerWebsocket(String secWebSocketKey, BufferedWriter writer) throws IOException {
+        log.info("hand with header");
+        String secWebSocket = "";
+        try {
+            byte[] secWebSocketKeyByte = (secWebSocketKey + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11").getBytes(StandardCharsets.UTF_8);
+            var digest = MessageDigest.getInstance(MessageDigestAlgorithms.SHA_1).
+                    digest(secWebSocketKeyByte);
+            secWebSocket = Base64.getEncoder().encodeToString(digest);
+            System.out.print(secWebSocket);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        writer.write("HTTP/1.1 101 Switching Protocols\r\n");
+        writer.write("Connection: Upgrade\r\n");
+        writer.write("Upgrade: websocket\r\n");
+        writer.write("Sec-WebSocket-Accept: " + secWebSocket + "\r\n");
+        writer.write("\r\n"); // 空行标识Header和Body的分隔
+        writer.flush();
+
+    }
+
+}
+```
+
+这里我们看到,我们在建立`websocket`连接之后，使用了一个轮训的方式进行数据读取和处理。
+
+这与浏览器端友好的事件驱动形的API不同。那么如何实现服务端的事件驱动呢?
+
+后续还需要继续探讨。
