@@ -95,5 +95,5 @@ def gh_pages():
     local("git add . && git commit -m 'update blog src' && git push origin master --force")
     local("cp -rf ./public/* ../visonforcoding.github.io/ && cd ../visonforcoding.github.io && git add . && git commit -m 'update blog' && git push origin master --force")
     local("pwd")
-    local("cd ../visonforcoding.github.io && git push gitee master --force")
+    # local("cd ../visonforcoding.github.io && git push gitee master --force")
 
