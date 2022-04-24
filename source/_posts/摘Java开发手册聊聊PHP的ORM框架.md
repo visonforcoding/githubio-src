@@ -3,6 +3,7 @@ title: 摘阿里Java开发手册聊聊PHP的ORM框架
 date: 2022-04-24 09:55:33
 tags:
 ---
+
 > 任何事情都要有行为准则,否则按照个人直觉做事必定酿成祸端
 
 阿里有一本小册叫做<<阿里JAVA开发手册>>,我们来看看其中关于数据库规范的几条。
@@ -27,7 +28,6 @@ tags:
 - Cycle ORM
 - Doctrine
 - Atlas.Orm
-
 更多ORM框架可从[awesome-php](https://github.com/ziadoz/awesome-php#database) 找到。
 
 ## Laravel Eloquent
