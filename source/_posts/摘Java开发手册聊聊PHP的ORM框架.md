@@ -20,7 +20,6 @@ tags:
 <!--more-->
 
 以此为理念我们应当*不使用外键*和*少使用join,甚至默认走多次查询来避免join*。为此我们来看看PHP生态的ORM框架哪种比较适合使用。
-
 我这里对比了ORM框架。
 
 - Laravel Eloquent
