@@ -215,7 +215,7 @@ $users = $this->atlas->select(\App\Model\User\User::class)->with(['addresses'])-
 
 ## 总结
 
-这样我基本解决了我的问题和一直一来坚持的几个原则。
+这样，通过doctrine和atlas的配合使用，CUD使用doctrine，R使用atlas+ObjectMapper。基本解决了我的问题和一直一来坚持的几个原则。
 
 - 80%的工作在处理数据，因此需要一个非常用得习惯的`ActiveRecord`框架。
 - 用对象少用PHP Array,把POPO用起来。
