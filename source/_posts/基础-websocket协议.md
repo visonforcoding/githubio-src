@@ -195,3 +195,99 @@ public class Handler extends Thread {
 
 后续还需要继续探讨。
 
+## 事件驱动API
+
+我们了解到浏览器端的websocket API是十分的便利的。
+
+```javascript
+// Create WebSocket connection.
+const socket = new WebSocket('ws://localhost:8080');
+
+// Connection opened
+socket.addEventListener('open', function (event) {
+    socket.send('Hello Server!');
+});
+
+// Listen for messages
+socket.addEventListener('message', function (event) {
+    console.log('Message from server ', event.data);
+});
+
+```
+相较于上面用java socket 实现的websocket server版本事件驱动型的API让程序开发变得更容易。
+
+### PHP实现
+
+`cboden/ratchet`也是基于事件驱动的websocket实现。[ratchet](http://socketo.me/)
+
+我基于自己的`wonfu`框架集成进去写了个demo测试
+
+```php
+## wsserver
+        $handler = new Mychat();
+        $handler->setRedis($this->redis);
+        $ws = new RatchetWsServer($handler);
+        // Make sure you're running this as root
+        $port = $input->getOption('port');
+        $output->writeln("server will run in port {$port}");
+        $server = IoServer::factory(new HttpServer($ws), $port);
+        $server->run();
+```
+
+```php
+<?php
+
+namespace App\Service;
+
+use Predis\Client;
+use Ratchet\MessageComponentInterface;
+use Ratchet\ConnectionInterface;
+
+/**
+ * chat.php
+ * Send any incoming messages to all connected clients (except sender)
+ */
+class Mychat implements MessageComponentInterface {
+    protected $clients;
+
+
+    public function __construct() {
+        $this->clients = new \SplObjectStorage;
+    }
+
+
+
+    public function onOpen(ConnectionInterface $conn) {
+        $this->clients->attach($conn);
+    }
+
+    public function onMessage(ConnectionInterface $from, $msg) {
+        foreach ($this->clients as $client) {
+//            if ($from != $client) {
+                $client->send("we receive your msg:".$msg);
+//            }
+        }
+    }
+
+    public function onClose(ConnectionInterface $conn) {
+        $this->clients->detach($conn);
+    }
+
+    public function onError(ConnectionInterface $conn, \Exception $e) {
+        $conn->close();
+    }
+
+
+
+}
+```
+
+非常简单的代码就能完成基本的demo测试。
+
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/20220419215814.png)
+
+
+### java实现
+
+
+
