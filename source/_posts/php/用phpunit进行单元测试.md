@@ -126,3 +126,7 @@ phpunit -d memory_limit=256M tests/Unit/TestMessage.php --coverage-html ./tests/
 
     }
 ```
+
+### whitelist
+
+查看[官网配置文档](https://phpunit.de/manual/6.5/en/appendixes.configuration.html#appendixes.configuration.whitelisting-files)

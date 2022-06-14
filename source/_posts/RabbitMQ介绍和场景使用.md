@@ -269,7 +269,7 @@ $callback = function ($msg) {
 $channel->basic_consume('task_queue', '', false, false, false, false, $callback);
 ```
 
-以上代码示例展示ack使用，basic_consume的第4个参数要 设置为true。
+以上代码示例展示ack使用，basic_consume的第4个参数要 设置为`false`。
 
 ### 拒绝消息
 
