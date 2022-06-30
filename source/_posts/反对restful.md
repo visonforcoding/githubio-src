@@ -113,7 +113,7 @@ POST   /zoos：新建一个动物园
 
 2. [the restful is big lie](https://mmikowski.github.io/the_lie/ "the restful is big lie")
 
-![](image/image_k1Duew8lNl.png)
+![](https://vison-blog.oss-cn-beijing.aliyuncs.com/image_k1Duew8lNl.png)
 
 ## 意义在哪
 
